@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Aevy | CPM Script Publishing</title>
+<meta name="description" content="Aevy is a local-first CPM script ecosystem: accounts, publisher pages and ownership-based permissions. No servers.">
+<meta name="theme-color" content="#0b0c0f">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#/" aria-label="Aevy home">
+      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M8 24 16 8l8 16" fill="none" stroke="var(--accent-ink)" stroke-width="3" stroke-linejoin="round"/><path d="M11.5 19h9" stroke="var(--accent-ink)" stroke-width="3"/></svg>
+      <span>Aevy</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="#/" data-route="home">Home</a>
+      <a href="#/scripts" data-route="scripts">Scripts</a>
+      <a href="#/publishers" data-route="publishers">Publishers</a>
+      <a href="#/files" data-route="files">My files</a>
+      <a href="#/watch" data-route="watch">Watch</a>
+    </nav>
+    <div class="bar-actions">
+      <button class="icon-btn" id="theme" aria-label="Toggle colour theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+      </button>
+      <span id="userSlot" class="uslot"></span>
+      <a class="btn btn-primary btn-sm hide-sm" href="#/publish">Publish script</a>
+      <button class="icon-btn burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HOME -->
+<section class="view" id="view-home" data-view="home">
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="pill fade" style="--d:0"><span class="dot"></span>CPM script ecosystem</p>
+        <h1 aria-label="Publish scripts. Download them as real files.">
+          <span class="w" style="--i:0"><span>Publish</span></span>
+          <span class="w" style="--i:1"><span>scripts.</span></span><br>
+          <span class="w" style="--i:2"><span>Download</span></span>
+          <span class="w" style="--i:3"><span>them</span></span>
+          <span class="w" style="--i:4"><span>as</span></span>
+          <span class="w" style="--i:5"><span class="hl">real&nbsp;files.</span></span>
+        </h1>
+        <p class="lede fade" style="--d:100">Write or import code in any language, edit it in place, attach a video walkthrough, and save it to your computer with one click. Everything stays on your device.</p>
+        <div class="cta fade" style="--d:200">
+          <a class="btn btn-primary btn-lg" href="#/publish">Publish a script</a>
+          <a class="btn btn-lg" href="#/scripts">Browse scripts</a>
+        </div>
+        <ul class="ticks fade" style="--d:300">
+          <li>Local accounts</li><li>Publisher-owned</li><li>No server</li>
+        </ul>
+      </div>
+      <div class="win fade" style="--d:250" aria-hidden="true">
+        <div class="win-bar"><span class="fname"><b id="termName">debounce.js</b></span><span class="pill pill-sm" id="termLang">JavaScript</span></div>
+        <div class="win-body" id="termBody"></div>
+        <div class="win-foot"><span id="termMeta">0 B</span><span class="fake-dl" id="fakeDl"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M5 20h14"/></svg>Download</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="wrap stats-grid">
+      <div class="stat"><strong data-count="scripts">0</strong><span>Scripts</span></div>
+      <div class="stat"><strong data-count="langs">0</strong><span>Languages</span></div>
+      <div class="stat"><strong data-count="lines">0</strong><span>Lines of code</span></div>
+      <div class="stat"><strong data-count="videos">0</strong><span>Videos saved</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><p class="eyebrow">Latest</p><h2>Fresh scripts</h2></div>
+        <a class="btn" href="#/scripts">View all scripts</a>
+      </div>
+      <div class="cards" id="latest"></div>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><p class="eyebrow">How it works</p><h2>Built around your files</h2></div>
+      </div>
+      <div class="features">
+        <div class="feat reveal" style="--i:0"><span class="n">01</span><h3>Publish</h3><p>Paste code or drop a file. The language is detected from the extension and a readable page is built instantly.</p></div>
+        <div class="feat reveal" style="--i:1"><span class="n">02</span><h3>Download</h3><p>Every script has a download button. Get one file, a selection, or the whole library as a single zip.</p></div>
+        <div class="feat reveal" style="--i:2"><span class="n">03</span><h3>Save to a folder</h3><p>On supported browsers, write scripts straight into a folder you choose on your computer.</p></div>
+        <div class="feat reveal" style="--i:3"><span class="n">04</span><h3>Watch alongside</h3><p>Attach a YouTube or direct video link to a script, or keep a personal watch list.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="cta-band reveal">
+        <div><h2>Your scripts never leave this device.</h2><p>Stored in your browser. Back them up any time as files or a single zip.</p></div>
+        <div class="cta"><a class="btn btn-primary btn-lg" href="#/files">Open local files</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCRIPTS -->
+<section class="view" id="view-scripts" data-view="scripts">
+  <div class="page-head"><div class="wrap">
+    <p class="eyebrow">Scripts</p>
+    <h1>Every script, one click to download.</h1>
+    <p>Search, filter and open any script. Each card has its own download button.</p>
+  </div></div>
+  <div class="wrap">
+    <div class="tools">
+      <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" class="field search" type="search" placeholder="Search scripts" aria-label="Search scripts" autocomplete="off">
+      </div>
+      <select id="sort" class="field sel" aria-label="Sort scripts">
+        <option value="new">Newest first</option>
+        <option value="upd">Recently edited</option>
+        <option value="az">Title A to Z</option>
+        <option value="old">Oldest first</option>
+      </select>
+      <span class="spacer"></span>
+      <button class="btn" id="zipAllTop"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M5 20h14"/></svg>Download all (.zip)</button>
+      <a class="btn btn-primary" href="#/publish">New script</a>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Filter by language"></div>
+    <div class="cards" id="cards" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- LOCAL FILES -->
+<section class="view" id="view-files" data-view="files">
+  <div class="page-head"><div class="wrap">
+    <p class="eyebrow">Local files</p>
+    <h1>Your scripts as real files.</h1>
+    <p>Download any script, a selection, or everything as a zip. Save straight into a folder on your computer, or import files from it.</p>
+  </div></div>
+  <div class="wrap">
+    <div class="file-actions">
+      <button class="btn btn-primary" id="dlSelected"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M5 20h14"/></svg><span id="dlSelectedLabel">Download all (.zip)</span></button>
+      <button class="btn" id="saveFolder">Save to folder</button>
+      <button class="btn" id="importFiles">Import files</button>
+      <input type="file" id="importFilesInput" multiple hidden accept=".js,.mjs,.ts,.py,.sh,.bash,.lua,.go,.rs,.html,.htm,.css,.json,.txt,.md">
+      <span class="spacer"></span>
+      <button class="btn" id="backupBtn">Backup (.json)</button>
+      <button class="btn" id="restoreBtn">Restore</button>
+      <input type="file" id="restoreInput" accept="application/json,.json" hidden>
+    </div>
+    <div class="drop-zone" id="fileDrop" tabindex="0" role="button" aria-label="Drop files to import">Drop script files here to import them</div>
+    <div class="ftable" id="ftable" aria-live="polite"></div>
+    <div class="meter" id="meter"></div>
+  </div>
+</section>
+
+<!-- PUBLISH -->
+<section class="view" id="view-publish" data-view="publish">
+  <div class="page-head"><div class="wrap">
+    <p class="eyebrow">Publish</p>
+    <h1>Add a new script.</h1>
+    <p>Write directly, or import a file from your computer. Nothing is uploaded anywhere.</p>
+  </div></div>
+  <div class="wrap pub">
+    <form class="form" id="pubForm" autocomplete="off">
+      <div class="drop" id="drop" tabindex="0" role="button" aria-label="Import a script file">
+        Drop a file here or <u>choose from your computer</u>
+        <input type="file" id="pubFile" hidden accept=".js,.mjs,.ts,.py,.sh,.bash,.lua,.go,.rs,.html,.htm,.css,.json,.txt,.md,.rb,.php,.java,.c,.cpp,.cs">
+      </div>
+      <div>
+        <label class="l" for="fTitle">Title</label>
+        <input class="field" id="fTitle" required maxlength="80" placeholder="Name your script">
+      </div>
+      <div class="row2">
+        <div><label class="l" for="fLang">Language</label><select class="field sel" id="fLang" style="width:100%"></select></div>
+        <div><label class="l" for="fAuthor">Author</label><input class="field" id="fAuthor" maxlength="40" placeholder="Your name"></div>
+      </div>
+      <div>
+        <label class="l" for="fDesc">Description</label>
+        <input class="field" id="fDesc" maxlength="220" placeholder="One line on what it does">
+      </div>
+      <div class="row2">
+        <div><label class="l" for="fTags">Tags</label><input class="field" id="fTags" placeholder="utility, files, cli"></div>
+        <div><label class="l" for="fVideo">Video link (optional)</label><input class="field" id="fVideo" inputmode="url" placeholder="YouTube or video URL"></div>
+      </div>
+      <div>
+        <label class="l" for="fCode">Code</label>
+        <textarea class="field" id="fCode" required spellcheck="false" placeholder="Paste or write your script here"></textarea>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary btn-lg" type="submit">Publish script</button>
+        <button class="btn btn-lg" type="button" id="pubDownload">Download file</button>
+        <button class="btn btn-lg" type="button" id="pubClear">Clear</button>
+      </div>
+      <p class="note">Saved to this browser's local storage. Every published script appears under Local files.</p>
+    </form>
+    <aside class="win preview" aria-label="Live preview">
+      <div class="win-bar"><span class="fname"><b id="pvName">untitled.js</b></span><span class="pill pill-sm" id="pvLang">JavaScript</span></div>
+      <div class="win-body" id="pvBody"></div>
+      <div class="win-foot"><span id="pvMeta">0 B</span><span></span></div>
+    </aside>
+  </div>
+</section>
+
+<!-- WATCH -->
+<section class="view" id="view-watch" data-view="watch">
+  <div class="page-head"><div class="wrap">
+    <p class="eyebrow">Watch</p>
+    <h1>Learn while you build.</h1>
+    <p>Paste a YouTube or direct video link to stream it here. Save links to a personal list, or play a video file straight from your computer.</p>
+  </div></div>
+  <div class="wrap watch">
+    <div>
+      <div id="stage"><div class="stage">Paste a link on the right to start watching.</div></div>
+      <div class="vnote" id="stageNote"></div>
+    </div>
+    <div>
+      <form class="form" id="vidForm" autocomplete="off">
+        <div><label class="l" for="vUrl">Video URL</label><input class="field" id="vUrl" inputmode="url" placeholder="https://www.youtube.com/watch?v=..." required></div>
+        <div><label class="l" for="vTitle">Title (optional)</label><input class="field" id="vTitle" maxlength="90" placeholder="Name for your list"></div>
+        <div class="actions">
+          <button class="btn btn-primary" type="submit">Play</button>
+          <button class="btn" type="button" id="vSave">Play and save</button>
+          <button class="btn" type="button" id="vLocal">Play local file</button>
+          <input type="file" id="vFile" accept="video/*" hidden>
+        </div>
+        <p class="note">Supports YouTube watch, share, shorts, embed and playlist links, Vimeo, and direct .mp4 or .webm URLs.</p>
+      </form>
+      <div class="vlist" id="vlist"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a class="brand" href="#/"><svg width="24" height="24" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M8 24 16 8l8 16" fill="none" stroke="var(--accent-ink)" stroke-width="3" stroke-linejoin="round"/><path d="M11.5 19h9" stroke="var(--accent-ink)" stroke-width="3"/></svg><span>Aevy</span></a>
+      <p>A local-first home for scripts. Content is stored in your browser and never leaves your device.</p>
+    </div>
+    <nav aria-label="Footer"><a href="#/scripts">Scripts</a><a href="#/publishers">Publishers</a><a href="#/files">My files</a><a href="#/publish">Publish</a><a href="#/watch">Watch</a></nav>
+  </div>
+</footer>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <div class="dlg-head">
+    <div style="min-width:0"><h2 id="dlgTitle"></h2><div class="sub" id="dlgSub"></div></div>
+    <button class="icon-btn" id="dlgClose" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg></button>
+  </div>
+  <div class="dlg-body" id="dlgBody"></div>
+</dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/auth.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/eco.js" defer></script>
+</body>
+</html>
